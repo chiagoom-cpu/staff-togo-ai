@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>公文式 江ヶ崎中央・綱島駅前 スタッフポータル</title>
+<style>
+  :root{
+    --ichigo:#e3344f; --ichigo-d:#c81e3a; --ink:#33272a; --muted:#8a7b80;
+    --card:#ffffff; --line:#ffe1e7;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 8% -10%, #ffe3ea 0%, rgba(255,227,234,0) 60%),
+      radial-gradient(1000px 520px at 112% 0%, #fff3d6 0%, rgba(255,243,214,0) 55%),
+      linear-gradient(180deg,#fff9f6 0%, #fff5f7 100%);
+    min-height:100vh;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:24px 16px 70px;}
+
+  .hero{
+    position:relative;border-radius:26px;overflow:hidden;
+    background:linear-gradient(135deg,#ff7a93 0%, #e3344f 55%, #ff9a5a 130%);
+    color:#fff;padding:22px 22px;box-shadow:0 18px 40px rgba(227,52,79,.25);
+    display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  }
+  .hero .berries{position:absolute;inset:0;font-size:30px;opacity:.16;pointer-events:none;}
+  .hero .berries span{position:absolute;}
+  .hero-left{flex:1 1 280px;min-width:230px;position:relative;z-index:1;}
+  .hero .chip{display:inline-block;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);
+    padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:700;margin-bottom:8px;}
+  .hero h1{margin:.1em 0 .2em;font-size:22px;line-height:1.35;}
+  .hero .hero-tag{font-size:12.5px;opacity:.92;margin:.3em 0 0;}
+  .hero-togo{display:flex;align-items:center;gap:10px;flex:0 0 auto;position:relative;z-index:1;}
+  .bubble{background:#fff;color:#33272a;border-radius:16px;padding:11px 14px;position:relative;
+    max-width:220px;box-shadow:0 8px 18px rgba(0,0,0,.12);}
+  .bubble .greet{display:block;font-size:15px;font-weight:800;}
+  .bubble .sub{display:block;font-size:12.5px;color:#7a6b6f;margin-top:3px;line-height:1.5;}
+  .bubble:after{content:"";position:absolute;right:-8px;top:50%;transform:translateY(-50%);
+    border:8px solid transparent;border-left-color:#fff;}
+  .togo-col{display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .togo-av{width:82px;height:82px;border-radius:50%;overflow:hidden;
+    border:3px solid rgba(255,255,255,.92);background:linear-gradient(135deg,#ffd9e0,#fff0d6);
+    display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 8px 18px rgba(0,0,0,.16);}
+  .togo-av img{width:100%;height:100%;object-fit:cover;}
+  .togo-name{font-size:12px;font-weight:800;background:rgba(255,255,255,.22);padding:1px 11px;border-radius:999px;}
+  @media(max-width:560px){
+    .hero{justify-content:center;}
+    .hero-togo{width:100%;justify-content:center;margin-top:6px;}
+    .bubble{max-width:62%;}
+  }
+
+  .section{margin-top:26px;}
+  .sechead{display:flex;align-items:baseline;gap:10px;margin:0 2px 12px;}
+  .sechead h2{font-size:17px;margin:0;color:var(--ichigo-d);font-weight:800;}
+  .sechead .sub{font-size:12px;color:var(--muted);}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;}
+  @media(min-width:760px){ .grid{grid-template-columns:repeat(3,1fr);} }
+  @media(min-width:980px){ .grid{grid-template-columns:repeat(4,1fr);} }
+
+  .tile{
+    display:flex;flex-direction:column;gap:5px;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:15px 14px 13px;position:relative;overflow:hidden;
+    box-shadow:0 6px 16px rgba(227,52,79,.06);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s;
+    cursor:pointer;min-height:112px;
+  }
+  .tile:hover{transform:translateY(-4px);box-shadow:0 16px 28px rgba(227,52,79,.15);border-color:#ffc2cf;}
+  .tile .bar{position:absolute;left:0;top:0;height:5px;width:100%;}
+  .tile .ico{font-size:26px;line-height:1;margin-top:3px;}
+  .tile .ttl{font-weight:800;font-size:14.5px;margin-top:2px;}
+  .tile .desc{font-size:11.5px;color:var(--muted);line-height:1.45;}
+  .tile .go{margin-top:auto;font-size:11.5px;font-weight:800;color:var(--ichigo-d);}
+  .tile.soon{opacity:.7;cursor:default;}
+  .tile .soonbadge{position:absolute;top:10px;right:10px;background:#fdeef0;color:var(--ichigo-d);
+    font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;}
+
+  .foot{margin-top:28px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7;}
+  .foot .quote{color:var(--ichigo-d);font-weight:800;font-size:14.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="berries"><span style="left:5%;top:20%">🍓</span><span style="left:44%;top:8%;font-size:34px">🍓</span><span style="left:30%;top:78%;font-size:20px">🍓</span></div>
+    <div class="hero-left">
+      <span class="chip">🍓 スタッフポータル</span>
+      <h1>公文式 江ヶ崎中央・綱島駅前教室</h1>
+      <p class="hero-tag">ここが入口。手続きも、AIへの相談も、ぜんぶここから。</p>
+    </div>
+    <div class="hero-togo">
+      <div class="bubble"><b class="greet" id="greet">こんにちは！</b><span class="sub" id="subline"></span></div>
+      <div class="togo-col">
+        <div class="togo-av" id="togoAv">🍓</div>
+        <div class="togo-name">東郷</div>
+      </div>
+    </div>
+  </header>
+
+  <div id="app"></div>
+
+  <p class="foot">
+    <span class="quote">「天井を作らない。ぶち当たってきて。」</span><br>
+    困ったときは、まず🍓AI東郷に聞いてOK。ひとりで抱えなくて大丈夫です。
+  </p>
+</div>
+
+<script>
+  // ▼▼ リンク設定：URLが決まったらここに貼るだけ（空 "" なら「準備中」表示）▼▼
+  const LINKS = {
+    // 🍓 AI・サポート
+    ai:"", manual:"", order:"", question:"", feedback:"",
+    // 📋 手続き・フォーム（現行スタッフサイトのフォームURLを貼る）
+    nyukai:"", taiken:"", taikai:"", kyoka:"", natsu:"", kyukai:"", kotsuhi:"", staffreg:"",
+    // 📅 教室情報
+    calendar:"", todo:"https://sites.google.com/view/kumon-togo-staff/ホーム",
+    contact:"", staff:"", links:"https://sites.google.com/view/kumon-togo-staff/ホーム",
+    dashboard:"", worktime:"", taikenlist:"",
+    // 🔐 管理者メニュー
+    dakoku:"",
+  };
+
+  // ▼ お知らせ・休み設定 ▼
+  const NOTICE = "";  // 手動のお知らせ（例: "今日は15時から説明会です！"）。入れると最優先で表示。空なら自動メッセージ。
+  const HOLIDAYS = [  // 教室のお休み・祝日・長期休みを "YYYY-MM-DD" で（ここに足すと「明日から〇連休です！」を自動表示）
+    // "2026-08-13", "2026-08-14", "2026-08-15",
+  ];
+  const TOGO_IMG = "togo.png";  // 東郷先生のイラスト。同じフォルダに togo.png を置くと表示（無ければ🍓）。別URLでもOK。
+
+  const SECTIONS = [
+    {title:"🍓 AI・サポート", sub:"困ったらまずここ", tiles:[
+      {key:"ai",      ico:"🍓", ttl:"AI東郷に聞く",     desc:"国語・採点・対応のヒント",       c1:"#ff7a93",c2:"#e3344f"},
+      {key:"manual",  ico:"📚", ttl:"マニュアル・資料",   desc:"国語教材分析シートなど",        c1:"#c79bff",c2:"#9a5cf0"},
+      {key:"order",   ico:"📦", ttl:"発注リスト",        desc:"欲しい物品・教材をリクエスト",     c1:"#ff9ec2",c2:"#ef5fa0"},
+      {key:"question",ico:"❓", ttl:"教材質問の記録",     desc:"教材番号＋質問→指導DBへ",       c1:"#b0a4ff",c2:"#7a6cf0"},
+      {key:"feedback",ico:"🛠", ttl:"改善要望・不具合",   desc:"バグ・こうだったらいいなを登録",   c1:"#9bdcff",c2:"#3aa0e8"},
+    ]},
+    {title:"📋 手続き・フォーム", sub:"入退会・各種申請", tiles:[
+      {key:"nyukai",  ico:"➕", ttl:"入会フォーム",       desc:"入会＆教科追加",              c1:"#ffb27a",c2:"#ff8a3d"},
+      {key:"taiken",  ico:"📝", ttl:"体験フォーム",       desc:"体験学習 受講決定後",          c1:"#7ab8ff",c2:"#4b86e8"},
+      {key:"taikai",  ico:"↩️", ttl:"退会・教科減フォーム", desc:"退会届受理後（全退会／教科減）",   c1:"#bcb6b8",c2:"#8a7f83"},
+      {key:"kyoka",   ico:"🔁", ttl:"教科変更フォーム",    desc:"教科の入れ替え（±0のみ）",       c1:"#7bd8b8",c2:"#34c4a0"},
+      {key:"natsu",   ico:"☀️", ttl:"夏の特別学習",       desc:"夏の特別学習（有料）の申込",      c1:"#ffce5c",c2:"#f4a300"},
+      {key:"kyukai",  ico:"⏸️", ttl:"休会フォーム",       desc:"休会届受理後",               c1:"#cbb6e8",c2:"#9a78cf"},
+      {key:"kotsuhi", ico:"🚃", ttl:"交通費申請",        desc:"月次交通費の申請",            c1:"#9be3d8",c2:"#3bb6a6"},
+      {key:"staffreg",ico:"🙋", ttl:"スタッフ自己登録",   desc:"新スタッフの初回登録",          c1:"#ff9ec2",c2:"#ef5fa0"},
+    ]},
+    {title:"📅 教室情報", sub:"今日のこと・連絡先", tiles:[
+      {key:"dashboard",ico:"📊", ttl:"教室の数字",       desc:"今の教科数・各教科の指導指標(ライト)", c1:"#9ad0ff",c2:"#4b86e8", soon:true},
+      {key:"calendar",ico:"📅", ttl:"本日の予定・カレンダー", desc:"体験・面談・教室の予定",      c1:"#ffb86b",c2:"#ff8a3d"},
+      {key:"taikenlist",ico:"🗒", ttl:"体験リスト",      desc:"体験予定・備考を名前で検索",     c1:"#a0e0c0",c2:"#3bb6a6", soon:true},
+      {key:"todo",    ico:"✅", ttl:"本日のTodo",        desc:"今日やること",               c1:"#7bd88f",c2:"#34c4a0"},
+      {key:"contact", ico:"📞", ttl:"連絡先・LINE",       desc:"教室番号・友だち追加",          c1:"#7ab8ff",c2:"#4b86e8"},
+      {key:"staff",   ico:"👥", ttl:"スタッフ紹介・誕生日", desc:"みんなのこと・今日の主役",       c1:"#ffd36b",c2:"#f4b400"},
+      {key:"worktime",ico:"🕒", ttl:"自分の勤務時間",     desc:"名前＋PWで今月の勤務時間を表示",   c1:"#ffd0a0",c2:"#ff9a4d", soon:true},
+      {key:"links",   ico:"🔗", ttl:"各種リンク集",        desc:"よく使うリンク",              c1:"#9be3d8",c2:"#3bb6a6"},
+    ]},
+    {title:"👥 生徒管理", sub:"（準備中）", tiles:[
+      {key:"seitoreg",  ico:"🧒", ttl:"生徒情報登録", desc:"準備中", c1:"#cfe8c0",c2:"#9cc98a", soon:true},
+      {key:"seitocheck",ico:"🔍", ttl:"生徒情報確認", desc:"準備中", c1:"#cfe0f5",c2:"#9ab8e0", soon:true},
+    ]},
+    {title:"🔐 管理者メニュー（ADMIN）", sub:"", tiles:[
+      {key:"dakoku", ico:"⏰", ttl:"打刻管理", desc:"勤怠の打刻（管理者）", c1:"#cbb6b8",c2:"#8a7f83"},
+    ]},
+  ];
+
+  // 時間帯あいさつ＋カレンダーの気配り
+  (function(){
+    const now=new Date(), h=now.getHours();
+    let g="こんにちは！", s="ここが入口。手続きも、AIへの相談も、ぜんぶここから。";
+    if(h>=5&&h<11){ g="おはようございます！"; s="今日も一日、よろしくお願いします🍓"; }
+    else if(h>=11&&h<16){ g="こんにちは！"; s="午後もいい時間にしていきましょう。"; }
+    else if(h>=16&&h<21){ g="おつかれさまです！"; s="今日も子どもたちのために、ありがとう。"; }
+    else { g="おつかれさまでした！"; s="ゆっくり休んでくださいね。"; }
+
+    // 休み検知（週末＋HOLIDAYS）→「明日から〇連休です！」
+    const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const isOff=d=>{const w=d.getDay();return w===0||w===6||HOLIDAYS.includes(ymd(d));};
+    let run=0, p=new Date(now); p.setDate(p.getDate()+1);
+    while(isOff(p)&&run<21){ run++; p.setDate(p.getDate()+1); }
+    let holidayMsg="";
+    if(run>=2) holidayMsg=`🎌 明日から${run}連休です！宿題の声かけ、忘れずに🍓`;
+    else if(run===1) holidayMsg="🌙 明日はお休みです。ゆっくりしてね🍓";
+
+    // 優先：手動NOTICE ＞ 休みメッセージ ＞ 通常メッセージ
+    const finalSub = NOTICE ? NOTICE : (holidayMsg || s);
+    document.getElementById('greet').textContent=g;
+    document.getElementById('subline').textContent=finalSub;
+    const av=document.getElementById('togoAv');
+    if(TOGO_IMG) av.innerHTML=`<img src="${TOGO_IMG}" alt="東郷先生" onerror="this.parentNode.textContent='🍓'">`;
+  })();
+
+  const app=document.getElementById('app');
+  SECTIONS.forEach(sec=>{
+    const wrap=document.createElement('section'); wrap.className='section';
+    wrap.innerHTML=`<div class="sechead"><h2>${sec.title}</h2>${sec.sub?`<span class="sub">${sec.sub}</span>`:''}</div>`;
+    const grid=document.createElement('div'); grid.className='grid';
+    sec.tiles.forEach(t=>{
+      const url=LINKS[t.key];
+      const ready=!!url && !t.soon;
+      const el=document.createElement(ready?'a':'div');
+      el.className='tile'+(ready?'':' soon');
+      if(ready){ el.href=url; el.target="_blank"; el.rel="noopener"; }
+      el.innerHTML=`
+        <div class="bar" style="background:linear-gradient(90deg,${t.c1},${t.c2})"></div>
+        ${ready?'':'<span class="soonbadge">準備中</span>'}
+        <div class="ico">${t.ico}</div>
+        <div class="ttl">${t.ttl}</div>
+        <div class="desc">${t.desc}</div>
+        <div class="go">${ready?'ひらく →':' '}</div>`;
+      grid.appendChild(el);
+    });
+    wrap.appendChild(grid); app.appendChild(wrap);
+  });
+</script>
+</body>
+</html>
